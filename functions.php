@@ -18,3 +18,9 @@ function error404() {
     require "views/404.view.php";
     die();
 }
+
+function error403() {
+    http_response_code(403);
+    require "views/403.view.php";
+    die();
+}

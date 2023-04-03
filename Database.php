@@ -10,12 +10,12 @@ class Database
         $this->conn = new PDO($dsn, $username, $password, [PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);
     }
 
-    public function query($query_string)
+    public function query($query_string, $params=[])
     {
         $statement = $this->conn->prepare(
             $query_string
         );
-        $statement->execute();
+        $statement->execute($params);
         return $statement;
     }
 
