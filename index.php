@@ -1,18 +1,17 @@
 <?php
 
+// DB Connection
+require "Database.php";
+$config = require("config.php");
+$db = new Database($config["database"]);
+$posts = $db
+    ->query(
+        "SELECT p.title, b.last_name 
+AS author 
+FROM posts p 
+JOIN bloggers b 
+ON p.author_id = b.blogger_id;"
+    )->fetchAll(PDO::FETCH_ASSOC);
+
 require "functions.php";
-
-$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
-
-$routes = [
-    "/" => "controllers/home.php",
-    "/about" => "controllers/about.php",
-    "/contact" => "controllers/contact.php",
-    "404" => "views/404.view.php"
-];
-
-if (array_key_exists($uri, $routes)) {
-    require $routes[$uri];
-} else {
-    require $routes["404"];
-}
+require "router.php";
